@@ -149,6 +149,22 @@ class pts // class for manipulaitng and displaying pointclouds or polyloops in 3
     popMatrix();
     return this;
   }
+    pts drawClosedCurve(float r, Frame f) 
+  {
+    //fill(dgreen);
+    //for (int v=0; v<nv; v++) show(G[v], r*3);    
+    //fill(magenta);
+    for (int v=0; v<nv-1; v++) {f.O = G[v]; drawArrows(f.O, f.I, f.J, f.K); stub(G[v], V(G[v], G[v+1]), r, r);}
+    stub(G[nv-1], V(G[nv-1], G[0]), r, r);
+    pushMatrix(); //translate(0,0,1); 
+    scale(1, 1, 0.03);  
+    //fill(grey);
+    //for (int v=0; v<nv; v++) show(G[v], r*3);    
+    //for (int v=0; v<nv-1; v++) stub(G[v], V(G[v], G[v+1]), r, r);  
+    //stub(G[nv-1], V(G[nv-1], G[0]), r, r);
+    popMatrix();
+    return this;
+  }
   pts set_pv_to_pp() {
     pv=pp; 
     return this;
@@ -230,6 +246,37 @@ class pts // class for manipulaitng and displaying pointclouds or polyloops in 3
     if (v==0) return nv-1; 
     else return v-1;
   }
+  
+    pts subdivideQuadraticSpline(pts Q) 
+    {
+    Q.empty();
+    int k = 0;
+    //while(k <=3) {
+    for(int i=0; i<nv*2; i++)
+      {
+      //fill(pink);
+        
+        if (i%2==0) {Q.addPt(((P(G[p(i/2)]).mul(0.689)).add(P(G[i/2]).mul(8.-2.*0.689)).add(P(G[n(i/2)]).mul(0.689))).div(8.)); }
+        else {Q.addPt((P(G[p((i-1)/2)]).mul(0.689-1.).add( P(G[(i-1)/2]).mul(9.-0.689)).add( P(G[n((i-1)/2)]).mul(9.-0.689)).add(P(G[n(n((i-1)/2))]).mul(0.689-1.))).div(16.));
+        }
+      }
+    return this;
+    } 
+      pts subdivideQuintic(pts Q) 
+    {
+    Q.empty();
+    int k = 0;
+    //while(k <=3) {
+    for(int i=0; i<nv*2; i++)
+      {
+      //fill(pink);
+        
+        if (i%2==0) {Q.addPt(((P(G[p(i/2)]).mul(1.5)).add(P(G[i/2]).mul(8.-2.*1.5)).add(P(G[n(i/2)]).mul(1.5))).div(8.)); }
+        else {Q.addPt((P(G[p((i-1)/2)]).mul(1.5-1.).add( P(G[(i-1)/2]).mul(9.-1.5)).add( P(G[n((i-1)/2)]).mul(9.-1.5)).add(P(G[n(n((i-1)/2))]).mul(1.5-1.))).div(16.));
+        }
+      }
+    return this;
+    } 
 pts subdivideFourPointInto(pts Q) 
   {
     Q.empty();
@@ -279,9 +326,10 @@ void displaySubdivision()
       fill(yellow); 
       for (int j=0; j<nv; j++) caplet(G[j], 6, G[n(j)], 6);
     }
-    boolean smooth =false;
+    boolean smooth =true;
     pt [] tmpB=new pt [nv];  
     pt[] B = new pt [nv];           // geometry table (vertices)
+    Frame[] F = new Frame[nv];
    int k =1;
    for (int i=0; i<nv; i++)
     {
@@ -299,6 +347,7 @@ void displaySubdivision()
       tmpB[i] = newC;
       } else {
         B[i] = newC;
+        
       }
     }
     //System.out.println(_hk);
@@ -313,9 +362,16 @@ void displaySubdivision()
       fill(green); 
       for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
     }
+    for(int i = 0; i < nv; i++) {
+      F[i] = new Frame(B[i]); 
+      float ang = angle(F[i].I, U(B[i], G[i])); 
+      F[i].translateRotate(0, ang, 0);}
     if (animating) f=n(f);
       fill(red); 
-      arrow(B[f], G[f], 20);
+      //arrow(B[f], G[f], 20);
+      drawArrows(F[f].O, F[f].I, F[f].J, F[f].K);
+      F[f].M = myMesh;
+      F[f].drawMesh(angle(F[f].I, U(B[f], G[f])));
  }
   int findKPrev(int k, int j) {
     int toR = j;

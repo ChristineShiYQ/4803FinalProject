@@ -34,7 +34,8 @@ class vec
   
 class pt 
    { 
-     float x=0,y=0,z=0; 
+     //float x=0,y=0,z=0; 
+     float x, y, z;
    pt () {}; 
    pt (float px, float py) {x = px; y = py;};
    pt (float px, float py, float pz) {x = px; y = py; z = pz; };
@@ -50,7 +51,40 @@ class pt
    pt mul(float f) {x*=f; y*=f; z*=f; return this;};
    pt div(float f) {x/=f; y/=f; z/=f; return this;};
    pt div(int f) {x/=f; y/=f; z/=f; return this;};
-   }
+   
+   public pt subtract(pt two){
+    pt returnSub = new pt(x-two.x, y-two.y, z-two.z);
+    return returnSub;
+  }
+  public pt adding(pt two){
+    pt returnSub = new pt(x+two.x, y+two.y, z+two.z);
+    return returnSub;
+  }
+  public pt adding(vec two){
+    pt returnSub = new pt(x+two.x, y+two.y, z+two.z);
+    return returnSub;
+  }
+  public pt multi(float f) {
+     pt m = new pt(this.x*f, this.y*f, this.z*f);
+     return m;
+  }
+   public boolean equalTo(pt otherVert){
+    if(abs(otherVert.x-x)<0.001 && abs(otherVert.y-y)<0.001 && abs(otherVert.z-z)<0.001){
+      return true;
+    }
+    return false;
+  }
+  // currentVertex cross product vVertex
+  public pt crossProd(pt vVertex){
+    pt returnCProd = new pt(y*vVertex.z-z*vVertex.y,z*vVertex.x-x*vVertex.z,x*vVertex.y-y*vVertex.x);
+    return returnCProd;
+  }
+  public pt normalizeVert(){
+    float sumSides = sqrt(x*x+y*y+z*z);
+    pt returnNormal = new pt(x/sumSides,y/sumSides,z/sumSides);
+    return returnNormal;
+  }
+ }
    
 // =====  vector functions
 vec V() {return new vec(); };                                                                          // make vector (x,y,z)
