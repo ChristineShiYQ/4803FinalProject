@@ -28,14 +28,19 @@ float defectAngle=0;
 pts P = new pts(); // polyloop in 3D
 pts Q = new pts(); // second polyloop in 3D
 pts R = new pts(); // inbetweening polyloop L(P,t,Q);
+loops l1;
 vec Up = V(0, 0, 1); // up vector
 Frame[] frames = new Frame[2];
 Mesh myMesh;
 void setup() {
   textureMode(NORMAL);          
   size(900, 900, P3D); // P3D means that we will do 3D graphics
-  P.declare(); Q.declare(); R.declare(); // P is a polyloop in 3D: declared in pts
-  P.loadPts("data/pts");  Q.loadPts("data/pts2"); // loads saved models from file (comment out if they do not exist yet)
+  //P.declare(); Q.declare(); R.declare(); // P is a polyloop in 3D: declared in pts
+  //P.loadPts("data/pts");  Q.loadPts("data/pts2"); // loads saved models from file (comment out if they do not exist yet)
+   l1 = new loops();
+   P = l1.P;
+   Q = l1.Q;
+   R = l1.R;
   frames[0] = new Frame(P(0, 0, 0));
   frames[1] = new Frame(P(100, 100, 0));
   noSmooth();
@@ -50,19 +55,9 @@ void draw() {
   setView();
   //frames[0].M = mymesh;
   pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
-  for (int v=0; v<Q.nv-1; v++)frames[1].O = Q.G[v];
+  for (int v=0; v<l1.Q.nv-1; v++)frames[1].O = l1.Q.G[v];
   drawArrows(frames[1].O, frames[1].I, frames[1].J, frames[1].K);
-  R.copyFrom(P); 
-  for(int i=0; i<level; i++) 
-    {
-    Q.copyFrom(R); 
-    Q.subdivideQuintic(R);
-    }
-      change = true;
-      showSkater = false;
-      R.displaySubdivision();
-      showKeys = false;
-      showCurve = false;
+l1.displaySubdivision();
   popMatrix(); // done with 3D drawing. Restore front view for writing text on canvas
   hint(DISABLE_DEPTH_TEST); // no z-buffer test to ensure that help text is visible
 
