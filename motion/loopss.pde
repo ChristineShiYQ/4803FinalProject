@@ -3,17 +3,38 @@ class loopss{
   loops[] curves = new loops [maxnc];           // geometry table (vertices)
   int pc =0, // picked curve index,
     iv=0, //  insertion curve index
-    nv = 0; // number of curve currently used in P
+    n = 0; // number of curve currently used in P
  loopss(){
    
  }
  void addCurve() {
-   curves[nv] = new loops();
+   curves[n] = new loops();
    iv++;
-   nv++;
+   n++;
  }
- void diplayCurves() {
-   for(int i = 0 ; i < nv; i++) {
+ void addCurve2() {
+   pts tmp = new pts();
+   tmp.declare();
+   tmp.loadPts("data/pts2");
+   curves[n] = new loops(tmp);
+   iv++;
+   n++;
+ }
+ void addCurve(loops cv) {
+   curves[n] = cv;
+   iv++;
+   n++;
+   print(n);
+ }
+ void displayCurves() {
+   for(int i = 0 ; i < n; i++) {
      curves[i].displaySubdivision();
+   }
+ }
+ void updateCurrent(int i) {
+   l1 = ls.curves[i];
+   P = l1.P;
+   Q = l1.Q;
+   R = l1.R;
  }
 }

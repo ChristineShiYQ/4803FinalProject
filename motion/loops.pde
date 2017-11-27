@@ -8,6 +8,15 @@ class loops {
   P.loadPts("data/pts");  Q.loadPts("data/pts2"); // loads saved models from file (comment out if they do not exist yet)
   createLoop();
   }
+  public loops(pts K) { 
+  P = new pts(); 
+  Q = new pts();
+  R = new pts(); 
+  P.declare(); Q.declare(); R.declare(); // P is a polyloop in 3D: declared in pts
+  P.copyFrom(K); 
+  Q.copyFrom(K); 
+  createLoop();
+  }
   void createLoop() {
      R.copyFrom(P); 
     for(int i=0; i<level; i++) {
