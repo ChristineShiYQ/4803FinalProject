@@ -9,8 +9,8 @@ void keyPressed()
       addNewCurve = true;
     }
     if(key == 'e') {
-      //loops curve = new loops(newLoop);
-      //ls.addCurve(curve);
+      loops curve = new loops(P);
+      ls.addCurve(curve);
       addNewCurve = false;
     }
 //  if(key=='`') picking=true; 
