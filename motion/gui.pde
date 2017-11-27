@@ -1,10 +1,9 @@
-boolean addNewCurve = false;
-pts newLoop;
+
 void keyPressed() 
   {
     if(key=='a') {
-      ls.addCurve2();
-      ls.updateCurrent(ls.n-1);
+      //ls.addCurve2();
+      //ls.updateCurrent(ls.n-1);
       //newLoop = new pts();
       //newLoop.declare();
       addNewCurve = true;
@@ -27,7 +26,7 @@ void keyPressed()
   if(key=='S') {P.addPt(Of,'s');}
   if(key=='B') {P.addPt(Of,'b');}
   if(key=='C') {P.addPt(Of,'c');}
-  if(key=='m') {method=(method+1)%6;change = true;}
+  if(key=='m') {method=(method+1)%5;}
   if(key=='[') {showControl=!showControl;}
   if(key==']') {showQuads=!showQuads;}
   if(key=='{') {showCurve=!showCurve;}
@@ -47,7 +46,6 @@ void keyPressed()
 
   //if(key=='e') {R.copyFrom(P); P.copyFrom(Q); Q.copyFrom(R);}
   if(key=='d') {P.set_pv_to_pp(); P.deletePicked();}
-  if(key=='i') P.insertClosestProjection(Of); // Inserts new vertex in P that is the closeset projection of O
   if(key=='W') {P.savePts("data/pts"); Q.savePts("data/pts2");}  // save vertices to pts2
   if(key=='L') {P.loadPts("data/pts"); Q.loadPts("data/pts2");}   // loads saved model
   if(key=='w') P.savePts("data/pts");   // save vertices to pts
@@ -56,6 +54,7 @@ void keyPressed()
   if(key=='^') showVecs=!showVecs;
   if(key=='#') exit();
   if(key=='=') {}
+  if(key=='i') { P.insertClosestProjection(Mouse()); }
   change=true;   // to save a frame for the movie when user pressed a key 
   }
 
@@ -67,12 +66,11 @@ void mouseWheel(MouseEvent event)
 
 void mousePressed() 
   {
-      if(addNewCurve && keyPressed && key=='a') {P.addPt(Of);}
-
-    //if(addNewCurve) newLoop.addPt(Mouse());
   //if (!keyPressed) picking=true;
-  //if (!keyPressed) {P.set_pv_to_pp(); println("picked vertex "+P.pp);}
-  //if(keyPressed && key=='a') {P.addPt(Of);}
+  if (!keyPressed) {
+    P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse());
+        P.set_pv_to_pp();
+  println("picked vertex "+P.pp);}
 //  if(keyPressed && (key=='f' || key=='s' || key=='b' || key=='c')) {P.addPt(Of,key);}
 
  // if (!keyPressed) P.setPicked();
@@ -89,8 +87,11 @@ void mouseMoved()
   
 void mouseDragged() 
   {
-  if (!keyPressed) P.setPickedTo(Of); 
-//  if (!keyPressed) {Of.add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); }
+    P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse());
+     P.set_pv_to_pp();
+
+  //if (!keyPressed) P.setPickedTo(Of); 
+  //if (!keyPressed) {Of.add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); }
   if (keyPressed && key==CODED && keyCode==SHIFT) {Of.add(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));};
   if (keyPressed && key=='x') P.movePicked(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); 
   if (keyPressed && key=='z') P.movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); 
@@ -121,6 +122,6 @@ void displayFooter()  // Displays help text at the bottom
     scribeFooter(menu,0); 
     }
 
-String title ="3D curve editor", name ="Yingqiong Shi",
+String title ="3D curve editor", name ="Jarek Rossignac",
        menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, `/wheel:closer, t/T:target, a:anim, #:quit",
        guide="click&drag:pick&slide on floor, xz/XZ:move/ALL, e:exchange, q/p:copy, l/L:load, w/W:write, m:subdivide method"; // user's guide

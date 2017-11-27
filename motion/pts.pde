@@ -314,8 +314,57 @@ pts subdivideFourPointInto(pts Q)
     }
     return this;
   }  
-
 void displaySubdivision() 
+{
+    float b = (float)Math.pow(4,level);
+    float a = 500; //more subdivided, should have bigger b
+    vec vecF = new vec(0,0,0);
+    vec vecG = new vec(0,0,-1);
+    pt newC = new pt(0,0,0);
+    if (showCurve) {
+      fill(yellow); 
+      for (int j=0; j<nv; j++) caplet(G[j], 6, G[n(j)], 6);
+    }
+    boolean smooth =false;
+    pt [] tmpB=new pt [nv];  
+    pt[] B = new pt [nv];           // geometry table (vertices)
+   int k =1;
+   for (int i=0; i<nv; i++)
+    {
+      //dual = refine, kill 
+      int Bi = findKNext(k,i);
+      int Di = findKPrev(k,i);
+      pt pB = G[Bi], pC =G[i], pD = G[Di];
+
+      vec v1 = V(pC,pD), v2 = V(pC,pB);
+      vec acc = A(v1,v2);
+      vecF = A(V(-b,acc), V(a,vecG)).normalize();
+      vecF = V(100, vecF);
+      newC = P(pC,vecF);
+      if(smooth) {
+      tmpB[i] = newC;
+      } else {
+        B[i] = newC;
+      }
+    }
+    //System.out.println(_hk);
+    if (smooth) {
+     smoothB(B,tmpB); 
+    }
+    if (showPath) {
+      fill(cyan); 
+      for (int j=0; j<nv; j++) caplet(B[j], 6, B[n(j)], 6);
+    } 
+    if (showKeys) {
+      fill(green); 
+      for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
+    }
+    if (animating) f=n(f);
+      fill(red); 
+      arrow(B[f], G[f], 20);
+ }
+
+void displaySubdivision1() 
 {
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b

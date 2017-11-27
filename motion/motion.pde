@@ -20,7 +20,8 @@ Boolean
 float 
   t=0, 
   s=0;
-
+boolean addNewCurve = false;
+pts newLoop;
 int
   f=0, maxf=2*30, level=6, method=0;
 String SDA = "angle";
@@ -50,6 +51,11 @@ void setup() {
   noSmooth();
   read_mesh ("my.ply");
   //read_mesh ("torus.ply", mymesh2);
+  
+  newLoop = new pts();
+   newLoop.declare();
+   newLoop.loadPts("data/pts3");
+     
   frameRate(30);
   }
 
@@ -59,10 +65,19 @@ void draw() {
   setView();
   //frames[0].M = mymesh;
   pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
+  
   for (int v=0; v<l1.Q.nv-1; v++)frames[1].O = l1.Q.G[v];
+
   drawArrows(frames[1].O, frames[1].I, frames[1].J, frames[1].K);
+   
   ls.displayCurves();
- 
+    //fill(green);
+   //newLoop.drawBalls(4);
+ if(addNewCurve) {
+   P = newLoop;  
+   fill(green);
+   P.drawClosedCurve(4);
+ }
 //l1.displaySubdivision();
   popMatrix(); // done with 3D drawing. Restore front view for writing text on canvas
   hint(DISABLE_DEPTH_TEST); // no z-buffer test to ensure that help text is visible

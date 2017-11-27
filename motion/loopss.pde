@@ -15,7 +15,7 @@ class loopss{
  void addCurve2() {
    pts tmp = new pts();
    tmp.declare();
-   tmp.loadPts("data/pts2");
+   tmp.loadPts("data/pts3");
    curves[n] = new loops(tmp);
    iv++;
    n++;
