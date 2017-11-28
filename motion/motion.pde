@@ -23,7 +23,7 @@ float
 boolean addNewCurve = false;
 pts newLoop;
 int
-  f=0, maxf=2*30, level=6, method=0;
+  f=0, maxf=2*30, level=4, method=0;
 String SDA = "angle";
 float defectAngle=0;
 pts P = new pts(); // polyloop in 3D
@@ -33,7 +33,7 @@ loops l1;
 loopss ls;
 vec Up = V(0, 0, 1); // up vector
 Frame[] frames = new Frame[2];
-Mesh myMesh;
+Mesh mymesh;
 void setup() {
   textureMode(NORMAL);          
   size(900, 900, P3D); // P3D means that we will do 3D graphics
@@ -50,8 +50,9 @@ void setup() {
   frames[0] = new Frame(P(0, 0, 0));
   frames[1] = new Frame(P(100, 100, 0));
   noSmooth();
-  read_mesh ("my.ply");
-  //read_mesh ("torus.ply", mymesh2);
+  mymesh = read_mesh ("my.ply", mymesh);
+  ls.m[0] = mymesh;
+  ls.m[0].ratio = 0.01;
   
   newLoop = new pts();
    newLoop.declare();
@@ -61,15 +62,27 @@ void setup() {
   }
 
 void draw() {
-  background(255);
+  background(0);
+     fill(255);
+  colorMode(RGB);
+    pointLight(255, 255, 255, 500, 600, 50);
+  textSize(20);
+  fill(255);
+  //shader(toon);
+  ambientLight(50, 50, 50);
+    lightSpecular(255, 255, 255);
+    directionalLight (100, 100, 100, -0.3, 0.5, -1);
+    
+    noStroke();
+    specular (180, 180, 180);
+    shininess (15.0);
   hint(ENABLE_DEPTH_TEST); 
   setView();
   directionalLight(126, 126, 126, 0, 0, -1);
   //frames[0].M = mymesh;
-  pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
-  doPick(); // sets Of and axes for 3D GUI (see pick Tab)
-  P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse()); // for picking (does not set P.pv)
  
+  pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
+
   for (int v=0; v<l1.Q.nv-1; v++)frames[1].O = l1.Q.G[v];
 
   //drawArrows(frames[1].O, frames[1].I, frames[1].J, frames[1].K);
@@ -83,6 +96,9 @@ void draw() {
    P.drawClosedCurve(4);
  }
 //l1.displaySubdivision();
+    doPick(); // sets Of and axes for 3D GUI (see pick Tab)
+  P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse()); // for picking (does not set P.pv)
+  P.showPicked();  
   popMatrix(); // done with 3D drawing. Restore front view for writing text on canvas
   hint(DISABLE_DEPTH_TEST); // no z-buffer test to ensure that help text is visible
 
@@ -99,3 +115,4 @@ void draw() {
     fill(#FFC800);
     arrow(O, V(100, K), 5);
   }
+  

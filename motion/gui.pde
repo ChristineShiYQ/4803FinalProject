@@ -1,4 +1,6 @@
 boolean selectingCurve = false;
+Mesh newmesh;
+Mesh curMesh;
 void keyPressed() 
   {
     if(key=='a') {
@@ -7,6 +9,10 @@ void keyPressed()
       //newLoop = new pts();
       //newLoop.declare();
       addNewCurve = true;
+      newmesh = read_mesh("torus.ply", newmesh);
+      ls.m[ls.n]= newmesh;
+      ls.m[ls.n].ratio = 0.5;
+      println(ls.n);
     }
     if(key == 'e' && addNewCurve) {
       loops curve = new loops(P);
@@ -65,6 +71,8 @@ void keyPressed()
   if(key=='#') exit();
   if(key=='=') {}
   if(key=='i') { P.insertClosestProjection(Mouse()); }
+  if(key=='+') { ls.m[ls.pc].ratio*=1.5;}
+  if(key=='-') { ls.m[ls.pc].ratio*=0.8;}
   change=true;   // to save a frame for the movie when user pressed a key 
   }
 
