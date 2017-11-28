@@ -28,8 +28,12 @@ class loopss{
  }
  void displayCurves() {
    for(int i = 0 ; i < n; i++) {
-     curves[i].createLoop();
+     if(i == ls.pc)curves[i].createLoop();
      curves[i].displaySubdivision();
+    if(i == ls.pc && showControl && selectingCurve) {
+     fill(red);
+     curves[i].P.drawClosedCurve(3);
+   }
    }
  }
   void updateCurrent() {

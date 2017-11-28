@@ -351,17 +351,18 @@ void displaySubdivision()
     if (smooth) {
      smoothB(B,tmpB); 
     }
-    if (showPath) {
-      fill(cyan); 
-      for (int j=0; j<nv; j++) caplet(B[j], 6, B[n(j)], 6);
-    } 
+    //if (showPath) {
+    //  fill(cyan); 
+    //  for (int j=0; j<nv; j++) caplet(B[j], 6, B[n(j)], 6);
+    //} 
     if (showKeys) {
       fill(green); 
       for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
     }
     if (animating) f=n(f);
       fill(red); 
-      arrow(B[f], G[f], 20);
+      show(G[f], 10);
+      //arrow(B[f], G[f], 20);
  }
 
 void displaySubdivision1() 
@@ -403,10 +404,10 @@ void displaySubdivision1()
     if (smooth) {
      smoothB(B,tmpB); 
     }
-    if (showPath) {
-      fill(cyan); 
-      for (int j=0; j<nv; j++) caplet(B[j], 6, B[n(j)], 6);
-    } 
+    //if (showPath) {
+    //  fill(cyan); 
+    //  for (int j=0; j<nv; j++) caplet(B[j], 6, B[n(j)], 6);
+    //} 
     if (showKeys) {
       fill(green); 
       for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
