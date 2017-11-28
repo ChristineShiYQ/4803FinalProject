@@ -70,7 +70,7 @@ void draw() {
  
   for (int v=0; v<l1.Q.nv-1; v++)frames[1].O = l1.Q.G[v];
 
-  drawArrows(frames[1].O, frames[1].I, frames[1].J, frames[1].K);
+  //drawArrows(frames[1].O, frames[1].I, frames[1].J, frames[1].K);
    
   ls.displayCurves();
     //fill(green);

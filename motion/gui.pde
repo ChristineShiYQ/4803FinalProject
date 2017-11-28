@@ -18,11 +18,9 @@ void keyPressed()
     selectingCurve = true;
     ls.pc=(ls.pc+1)%ls.n;
     ls.updateCurrent();
-    print("pc: "+ls.pc+"\n");
+    print("picked curve "+ls.pc+"\n");
   }
   if(key == 'e' && selectingCurve) {
-      loops curve = new loops(P);
-      ls.addCurve(curve);
       selectingCurve = false;
     }
 
