@@ -108,13 +108,14 @@ public pt pick(float mX, float mY, float mZ) {
    if(mousePressed&&!keyPressed) // when mouse is pressed (but no key), show red ball at surface point under the mouse (and its shadow)
      {
      PickedFocus=false;  
-     fill(magenta); show(Of,3);  fill(grey); show(Ofp,3); 
+     fill(magenta); show(Of,3);
+     fill(grey); show(Ofp,3); 
      }  
     // Locks focus on point Of until Of is reset (mouse pressed, but no key)
     if(PickedFocus) F=P(Of); 
     // show focus point F and its shadow
-    fill(magenta); show(F,4); // magenta focus point (stays at center of screen)
-    fill(magenta,100); showShadow(F,5); // magenta translucent shadow of focus point (after moving it up with 'F'
+    //fill(magenta); show(F,4); // magenta focus point (stays at center of screen)
+    //fill(magenta,100); showShadow(F,5); // magenta translucent shadow of focus point (after moving it up with 'F'
     computeProjectedVectors(); // computes screen projections I, J, K of basis vectors (see bottom of pv3D): used for dragging in viewer's frame    
 
     //P.setIdOfVertexWithClosestScreenProjectionTo2(Mouse()); // ID of vertex of P with closest screen projection to mouse (us in keyPressed 'x'...

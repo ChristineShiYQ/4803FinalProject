@@ -37,6 +37,7 @@ Mesh myMesh;
 void setup() {
   textureMode(NORMAL);          
   size(900, 900, P3D); // P3D means that we will do 3D graphics
+
   //P.declare(); Q.declare(); R.declare(); // P is a polyloop in 3D: declared in pts
   //P.loadPts("data/pts");  Q.loadPts("data/pts2"); // loads saved models from file (comment out if they do not exist yet)
    ls = new loopss();
@@ -63,6 +64,7 @@ void draw() {
   background(255);
   hint(ENABLE_DEPTH_TEST); 
   setView();
+  directionalLight(126, 126, 126, 0, 0, -1);
   //frames[0].M = mymesh;
   pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
   doPick(); // sets Of and axes for 3D GUI (see pick Tab)
