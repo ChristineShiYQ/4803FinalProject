@@ -20,8 +20,8 @@ Mesh read_mesh (String filename, Mesh myMesh){
   pt currVertex;
   for (i = 0; i < num_vertices; i++) {
     words = split (lines[i+2], " ");
-    println(words[0]);
-    println(float(words[0]));
+    //println(words[0]);
+    //println(float(words[0]));
     currVertex = new pt(40*float(words[0]),40*float(words[1]),40*float(words[2]));
     myMesh.verticies.add(currVertex);
   }
@@ -40,6 +40,7 @@ Mesh read_mesh (String filename, Mesh myMesh){
     myMesh.geometry[i*3] = int(words[1]); 
     myMesh.geometry[i*3+1] = int(words[2]); 
     myMesh.geometry[i*3+2] = int(words[3]); 
+    
   }
   
   
@@ -71,6 +72,7 @@ public class Mesh{
     }
     ratio = 10;
   }
+  
   int[] makeCorners(int[] temp){
   pt aNextVert, bPrevVert, aPrevVert, bNextVert;
   println(temp.length);
@@ -124,14 +126,14 @@ ArrayList<pt> vertexNormalFill(){
   return tempVertRet;
 }
 int nextCorner(int currCorner){
-  //print("sizeOfCorners: " + myMesh.opposite.length);
+  //print("sizeOfCorners: " + this.opposite.length);
   //println("curr corner:" + currCorner);
   int triangleCorner = currCorner/3;
   //println("next corner:" + (triangleCorner*3 + ((currCorner+1)%3)));
   return triangleCorner*3 + ((currCorner+1)%3);
 }
 int swing(int currCorner){
-  //println("swing: " +nextCorner(myMesh.opposite[nextCorner(currCorner)]));
+  //println("swing: " +nextCorner(this.opposite[nextCorner(currCorner)]));
   return nextCorner(this.opposite[nextCorner(currCorner)]);
 }
 int prevCorner(int currCorner){

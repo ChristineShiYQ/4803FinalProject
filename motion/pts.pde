@@ -314,8 +314,9 @@ pts subdivideFourPointInto(pts Q)
     }
     return this;
   }  
-pt displaySubdivision(boolean clockwise) 
+pt displaySubdivision(boolean clockwise, Mesh m) 
 {
+    
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b
     vec vecF = new vec(0,0,0);
@@ -328,6 +329,7 @@ pt displaySubdivision(boolean clockwise)
     boolean smooth =false;
     pt [] tmpB=new pt [nv];  
     pt[] B = new pt [nv];           // geometry table (vertices)
+    Frame[] F = new Frame[nv];
    int k =1;
    for (int i=0; i<nv; i++)
     {
@@ -358,17 +360,25 @@ pt displaySubdivision(boolean clockwise)
     if (showKeys) {
       fill(green); 
       for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
+
     }
+   for(int i = 0; i < nv; i++) {
+      F[i] = new Frame(G[i]); 
+     }
     if (animating) f=n(f);
      if(clockwise) fill(red); 
      else fill(green);
       show(G[f], 10);
+      F[f].M = m;
+      float ang = angle(F[f].I, U(B[f], G[f]));
+      F[f].translateRotate(ang, ang, ang);
+      F[f].drawMesh(angle(F[f].I, U(B[f], G[f])), m.ratio);
       pt toR = G[f];
       return toR;
       //arrow(B[f], G[f], 20);
  }
 
-void displaySubdivision1(Mesh m) 
+void displaySubdivision1() 
 {
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b
@@ -417,16 +427,14 @@ void displaySubdivision1(Mesh m)
     }
     for(int i = 0; i < nv; i++) {
       F[i] = new Frame(B[i]); 
-      
-      }
+      float ang = angle(F[i].I, U(B[i], G[i])); 
+      F[i].translateRotate(0, ang, 0);}
     if (animating) f=n(f);
       fill(red); 
       //arrow(B[f], G[f], 20);
-      //drawArrows(F[f].O, F[f].I, F[f].J, F[f].K);
-      F[f].M = m;
-      float ang = angle(F[f].I, U(B[f], G[f]));
-      F[f].translateRotate(ang, ang, ang);
-      F[f].drawMesh(angle(F[f].I, U(B[f], G[f])), m.ratio);
+      drawArrows(F[f].O, F[f].I, F[f].J, F[f].K);
+      //F[f].M = myMesh;
+      //F[f].drawMesh(angle(F[f].I, U(B[f], G[f])), m);
  }
   int findKPrev(int k, int j) {
     int toR = j;

@@ -1,10 +1,6 @@
 class loops {
   public pts P,Q,R;
-<<<<<<< HEAD
-  public Frame F;
-=======
   public boolean clockwise = true;
->>>>>>> origin/master
   public loops() { 
   P = new pts(); 
   Q = new pts();
@@ -21,7 +17,6 @@ class loops {
   P.declare(); Q.declare(); R.declare(); // P is a polyloop in 3D: declared in pts
   P.copyFrom(K); 
   Q.copyFrom(K); 
-  F = new Frame();
   createLoop();
   }
   void createLoop() {
@@ -31,13 +26,8 @@ class loops {
       Q.subdivideQuintic(R);
       }
   }
-<<<<<<< HEAD
-  void displaySubdivision(Mesh curMesh) {
-    R.displaySubdivision1(curMesh);
-=======
-  pt displaySubdivision() {
-    pt toR = R.displaySubdivision(clockwise);
->>>>>>> origin/master
+  pt displaySubdivision(Mesh curMesh) {
+    pt toR = R.displaySubdivision(clockwise, curMesh);
     fill(yellow); if(showCurve) Q.drawClosedCurve(3);
     if(showControl) {fill(grey); P.drawClosedCurve(3);}
     return toR;

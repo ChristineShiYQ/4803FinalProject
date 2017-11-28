@@ -26,26 +26,25 @@ class Frame {
      K = R(K, angle, U(M), U(N));
   }
   
-  public void drawMesh(float angle, float ratio) {
-    //translate(O.x, O.y, O.z);
-    fill(180);
+  public void drawMesh(float angle, float r) {
+
     pushMatrix();
     translate(O.x, O.y, O.z);
-    rotateZ(angle);
+    rotateX(angle);
+    fill(180);
     pt currFace1, currFace2, currFace3, normFace;
     for(int numFace=0; numFace<(M.geometry.length)/3; numFace++){
-      currFace1 = M.verticies.get(M.geometry[numFace*3]).multi(ratio);
-      currFace2 = M.verticies.get(M.geometry[numFace*3+1]).multi(ratio);
-      currFace3 = M.verticies.get(M.geometry[numFace*3+2]).multi(ratio);
-      normFace = M.faceNormals.get(numFace).multi(ratio);
+      currFace1 = M.verticies.get(M.geometry[numFace*3]).multi(r);
+      currFace2 = M.verticies.get(M.geometry[numFace*3+1]).multi(r);
+      currFace3 = M.verticies.get(M.geometry[numFace*3+2]).multi(r);
+      normFace = M.faceNormals.get(numFace).multi(r);
 
       beginShape();
-        normal (normFace.x, normFace.y, normFace.z);
+        normal(normFace.x, normFace.y, normFace.z);
         vertex (currFace1.x,  currFace1.y, currFace1.z);
         vertex (currFace2.x,  currFace2.y, currFace2.z);
         vertex (currFace3.x,  currFace3.y, currFace3.z);
       endShape(CLOSE);
-     
   }
   popMatrix();
   }

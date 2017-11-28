@@ -1,6 +1,5 @@
 boolean selectingCurve = false;
 Mesh newmesh;
-Mesh curMesh;
 void keyPressed() 
   {
     if(key=='a') {
@@ -12,7 +11,6 @@ void keyPressed()
       newmesh = read_mesh("torus.ply", newmesh);
       ls.m[ls.n]= newmesh;
       ls.m[ls.n].ratio = 0.5;
-      println(ls.n);
     }
     if(key == 'e' && addNewCurve) {
       loops curve = new loops(P);
@@ -72,7 +70,7 @@ void keyPressed()
   if(key=='=') {}
   if(key=='i') { P.insertClosestProjection(Mouse()); }
   if(key=='+') { ls.m[ls.pc].ratio*=1.5;}
-  if(key=='-') { ls.m[ls.pc].ratio*=0.8;}
+  if(key=='-') { ls.m[ls.pc].ratio*=0.5;}
   change=true;   // to save a frame for the movie when user pressed a key 
   }
 
@@ -131,8 +129,13 @@ void mouseDragged()
 // **** Header, footer, help text on canvas
 void displayHeader()  // Displays title and authors face on screen
     {
-    scribeHeader(title,0); scribeHeaderRight(name); 
-    fill(white); image(myFace, width-myFace.width/2,25,myFace.width/2,myFace.height/2); 
+    scribeHeader(title,0); 
+     //scribeHeaderRight(name); 
+    scribeHeader(guide,1);
+    scribeHeader(guide2,2);
+    scribeHeader(guide3,3);
+    scribeHeader(guide4,4);
+    //fill(white); image(myFace, width-myFace.width/2,25,myFace.width/2,myFace.height/2); 
     }
 void displayFooter()  // Displays help text at the bottom
     {
@@ -140,6 +143,9 @@ void displayFooter()  // Displays help text at the bottom
     scribeFooter(menu,0); 
     }
 
-String title ="3D curve editor", name ="Jarek Rossignac",
+String title ="3D animator", name ="",
        menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, `/wheel:closer, t/T:target, a:anim, #:quit",
-       guide="click&drag:pick&slide on floor, xz/XZ:move/ALL, e:exchange, q/p:copy, l/L:load, w/W:write, m:subdivide method"; // user's guide
+       guide="press a: start adding a new curve; press ‘e’: finish adding a new curve;",
+       guide2 = "press ‘[‘: show original curve;press ‘{“show smoothed curve;",
+       guide3 = "press ‘z’ or ‘x’ while dragging mouse: change the position control point on the selected curve;",
+       guide4 = "press ’s’: select curve to be edited (need to first press ‘[‘ to see curves)"; // user's guide
