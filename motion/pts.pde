@@ -314,7 +314,7 @@ pts subdivideFourPointInto(pts Q)
     }
     return this;
   }  
-void displaySubdivision() 
+pt displaySubdivision(boolean clockwise) 
 {
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b
@@ -360,8 +360,11 @@ void displaySubdivision()
       for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
     }
     if (animating) f=n(f);
-      fill(red); 
+     if(clockwise) fill(red); 
+     else fill(green);
       show(G[f], 10);
+      pt toR = G[f];
+      return toR;
       //arrow(B[f], G[f], 20);
  }
 
