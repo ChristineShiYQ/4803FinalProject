@@ -314,7 +314,7 @@ pts subdivideFourPointInto(pts Q)
     }
     return this;
   }  
-void displaySubdivision() 
+void displaySubdivision1() 
 {
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b
@@ -364,7 +364,7 @@ void displaySubdivision()
       arrow(B[f], G[f], 20);
  }
 
-void displaySubdivision1() 
+void displaySubdivision() 
 {
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b
@@ -378,7 +378,6 @@ void displaySubdivision1()
     boolean smooth =true;
     pt [] tmpB=new pt [nv];  
     pt[] B = new pt [nv];           // geometry table (vertices)
-    Frame[] F = new Frame[nv];
    int k =1;
    for (int i=0; i<nv; i++)
     {
@@ -411,17 +410,9 @@ void displaySubdivision1()
       fill(green); 
       for (int j=0; j<nv; j+=4) arrow(B[j], G[j], 3);
     }
-    for(int i = 0; i < nv; i++) {
-      F[i] = new Frame(B[i]); 
-      float ang = angle(F[i].I, U(B[i], G[i])); 
-      F[i].translateRotate(0, ang, 0);}
-    if (animating) f=n(f);
-      fill(red); 
-      //arrow(B[f], G[f], 20);
-      drawArrows(F[f].O, F[f].I, F[f].J, F[f].K);
-      F[f].M = myMesh;
-      F[f].drawMesh(angle(F[f].I, U(B[f], G[f])));
+   
  }
+
   int findKPrev(int k, int j) {
     int toR = j;
     for (int i = 0; i < k; i++ ) {

@@ -1,4 +1,4 @@
-int[] makeCorners(int[] temp){
+int[] makeCorners(int[] temp, Mesh myMesh){
   pt aNextVert, bPrevVert, aPrevVert, bNextVert;
   println(temp.length);
   int[] tempRet = new int[temp.length];
@@ -16,7 +16,7 @@ int[] makeCorners(int[] temp){
   }
   return tempRet;
 }
-ArrayList<pt> faceNormals(){
+ArrayList<pt> faceNormals(Mesh myMesh){
   pt point1, point2, point3,calcFaceNorm, tempVertNormal;
   ArrayList<pt> tempFaceRet = new ArrayList<pt>();
   for(int x=0; x<myMesh.geometry.length/3; x++){
@@ -29,7 +29,7 @@ ArrayList<pt> faceNormals(){
   }
   return tempFaceRet;
 }
-ArrayList<pt> vertexNormalFill(){
+ArrayList<pt> vertexNormalFill(Mesh myMesh){
   ArrayList<pt> tempVertRet = new ArrayList<pt>();
   ArrayList<pt> runTwo;
   pt testAdd;
@@ -65,22 +65,22 @@ int prevCorner(int currCorner){
   int nextC = nextCorner(currCorner);
   return nextCorner(nextC);
 }
-int indexGeoTable(pt currVert){
-  for(int i=0; i<myMesh.verticies.size(); i++){
-    if(currVert.equalTo(myMesh.verticies.get(i))){
-      return i;
-    }
-  }
-  return -1;
-}
-int indexCornersTable(int currI){
-  for(int unIter=0; unIter<myMesh.geometry.length; unIter++){
-    if(myMesh.geometry[unIter]==currI){
-      return unIter;
-    }
-  }
-  return -1;
-}
+//int indexGeoTable(pt currVert){
+//  for(int i=0; i<myMesh.verticies.size(); i++){
+//    if(currVert.equalTo(myMesh.verticies.get(i))){
+//      return i;
+//    }
+//  }
+//  return -1;
+//}
+//int indexCornersTable(int currI){
+//  for(int unIter=0; unIter<myMesh.geometry.length; unIter++){
+//    if(myMesh.geometry[unIter]==currI){
+//      return unIter;
+//    }
+//  }
+//  return -1;
+//}
 pt centroidTriangle(pt v1, pt v2, pt v3){
   float xMean = (v1.x+v2.x+v3.x)/3;
   float yMean = (v1.y+v2.y+v3.y)/3;

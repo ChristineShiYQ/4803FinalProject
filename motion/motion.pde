@@ -33,7 +33,6 @@ loops l1;
 loopss ls;
 vec Up = V(0, 0, 1); // up vector
 Frame[] frames = new Frame[2];
-Mesh myMesh;
 void setup() {
   textureMode(NORMAL);          
   size(900, 900, P3D); // P3D means that we will do 3D graphics
