@@ -1,4 +1,4 @@
-
+boolean selectingCurve = false;
 void keyPressed() 
   {
     if(key=='a') {
@@ -8,18 +8,30 @@ void keyPressed()
       //newLoop.declare();
       addNewCurve = true;
     }
-    if(key == 'e') {
+    if(key == 'e' && addNewCurve) {
       loops curve = new loops(P);
       ls.addCurve(curve);
       addNewCurve = false;
     }
+    //selecting cur
+    if(key=='s') {
+    selectingCurve = true;
+    ls.pc=(ls.pc+1)%ls.n;
+    ls.updateCurrent();
+    print("pc: "+ls.pc+"\n");
+  }
+  if(key == 'e' && selectingCurve) {
+      loops curve = new loops(P);
+      ls.addCurve(curve);
+      selectingCurve = false;
+    }
+
 //  if(key=='`') picking=true; 
   if(key=='?') scribeText=!scribeText;
   if(key=='!') snapPicture();
   if(key=='~') filming=!filming;
   if(key==']') showBalls=!showBalls;
   if(key=='f') {P.setPicekdLabel(key);}
-  if(key=='s') {P.setPicekdLabel(key);}
   if(key=='b') {P.setPicekdLabel(key);}
   if(key=='c') {P.setPicekdLabel(key);}
   if(key=='F') {P.addPt(Of,'f');}
@@ -87,8 +99,8 @@ void mouseMoved()
   
 void mouseDragged() 
   {
-    P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse());
-     P.set_pv_to_pp();
+    //P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse());
+    // P.set_pv_to_pp();
 
   //if (!keyPressed) P.setPickedTo(Of); 
   //if (!keyPressed) {Of.add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); }

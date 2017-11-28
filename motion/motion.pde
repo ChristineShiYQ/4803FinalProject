@@ -33,6 +33,7 @@ loops l1;
 loopss ls;
 vec Up = V(0, 0, 1); // up vector
 Frame[] frames = new Frame[2];
+Mesh myMesh;
 void setup() {
   textureMode(NORMAL);          
   size(900, 900, P3D); // P3D means that we will do 3D graphics
@@ -64,7 +65,9 @@ void draw() {
   setView();
   //frames[0].M = mymesh;
   pushMatrix();   // to ensure that we can restore the standard view before writing on the canvas
-  
+  doPick(); // sets Of and axes for 3D GUI (see pick Tab)
+  P.SETppToIDofVertexWithClosestScreenProjectionTo(Mouse()); // for picking (does not set P.pv)
+ 
   for (int v=0; v<l1.Q.nv-1; v++)frames[1].O = l1.Q.G[v];
 
   drawArrows(frames[1].O, frames[1].I, frames[1].J, frames[1].K);

@@ -1,6 +1,6 @@
 // Read polygon mesh from .ply file
 
-Mesh read_mesh (String filename){
+void read_mesh (String filename){
   int i;
   String[] words;
   
@@ -14,7 +14,7 @@ Mesh read_mesh (String filename){
   int num_faces = int(words[1]);
   // println ("number of faces = " + num_faces);
   
-  Mesh myMesh = new Mesh(num_vertices,num_faces);
+  myMesh = new Mesh(num_vertices,num_faces);
   
   // read in the vertices
   pt currVertex;
@@ -44,11 +44,10 @@ Mesh read_mesh (String filename){
   
   
   // fill in OPPOSITES table
-  myMesh.opposite = makeCorners(myMesh.geometry, myMesh);
+  myMesh.opposite = makeCorners(myMesh.geometry);
   // make a face normal table which will be number of faces
-  myMesh.faceNormals = faceNormals(myMesh);
-  myMesh.vertexNormals = vertexNormalFill(myMesh);
-  return myMesh;
+  myMesh.faceNormals = faceNormals();
+  myMesh.vertexNormals = vertexNormalFill();
 }
 
 public class Mesh{

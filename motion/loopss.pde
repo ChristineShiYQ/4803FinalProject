@@ -28,8 +28,15 @@ class loopss{
  }
  void displayCurves() {
    for(int i = 0 ; i < n; i++) {
+     curves[i].createLoop();
      curves[i].displaySubdivision();
    }
+ }
+  void updateCurrent() {
+   l1 = ls.curves[pc];
+   P = l1.P;
+   Q = l1.Q;
+   R = l1.R;
  }
  void updateCurrent(int i) {
    l1 = ls.curves[i];
