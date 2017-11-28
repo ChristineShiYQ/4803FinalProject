@@ -368,7 +368,7 @@ pt displaySubdivision(boolean clockwise)
       //arrow(B[f], G[f], 20);
  }
 
-void displaySubdivision1() 
+void displaySubdivision1(Mesh m) 
 {
     float b = (float)Math.pow(4,level);
     float a = 500; //more subdivided, should have bigger b
@@ -417,14 +417,16 @@ void displaySubdivision1()
     }
     for(int i = 0; i < nv; i++) {
       F[i] = new Frame(B[i]); 
-      float ang = angle(F[i].I, U(B[i], G[i])); 
-      F[i].translateRotate(0, ang, 0);}
+      
+      }
     if (animating) f=n(f);
       fill(red); 
       //arrow(B[f], G[f], 20);
-      drawArrows(F[f].O, F[f].I, F[f].J, F[f].K);
-      F[f].M = myMesh;
-      F[f].drawMesh(angle(F[f].I, U(B[f], G[f])));
+      //drawArrows(F[f].O, F[f].I, F[f].J, F[f].K);
+      F[f].M = m;
+      float ang = angle(F[f].I, U(B[f], G[f]));
+      F[f].translateRotate(ang, ang, ang);
+      F[f].drawMesh(angle(F[f].I, U(B[f], G[f])), m.ratio);
  }
   int findKPrev(int k, int j) {
     int toR = j;

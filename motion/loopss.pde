@@ -1,7 +1,12 @@
 class loopss{
   int maxnc = 16000;                 //  max number of curvers
+<<<<<<< HEAD
+  loops[] curves = new loops [maxnc];           // geometry table (vertices)
+  Mesh[] m = new Mesh[maxnc];
+=======
   loops[] curves = new loops [maxnc];    // geometry table (vertices)
     pt[] balls = new pt[maxnc];
+>>>>>>> origin/master
   int pc =0, // picked curve index,
     iv=0, //  insertion curve index
     n = 0; // number of curve currently used in P
@@ -30,7 +35,11 @@ class loopss{
  void displayCurves() {
    for(int i = 0 ; i < n; i++) {
      if(i == ls.pc)curves[i].createLoop();
+<<<<<<< HEAD
+     curves[i].displaySubdivision(m[i]);
+=======
       balls[i] = curves[i].displaySubdivision();
+>>>>>>> origin/master
     if(i == ls.pc && showControl && selectingCurve) {
      fill(red);
      curves[i].P.drawClosedCurve(3);
